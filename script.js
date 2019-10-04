@@ -2,15 +2,23 @@
 
 const searchURL = 'https://api.github.com'
 
-function displayRelults(responseJson) {
-    
+function displayResults(responseJson) {
+    $('.results-list').empty();
+
+    for (let i = 0; i < responseJson.length; i++) {
+        $('.results-list').append(
+            `<li><h3><a href="${responseJson[i].html_url}" target="_blank">${responseJson[i].name}</a></h3></li>`
+        );
+    }
+
+    $('.results').removeClass('hidden');
 }
 
 function getUserRepos(query) {
     // use fetch() to GET user repos from GitHub API
 
     const url = searchURL + '/users/' + query + '/repos';
-    console.log(url);
+    console.log(url)
     const options = {
         headers: new Headers({
             "Accept": "application/vnd.github.v3+json"
@@ -26,7 +34,9 @@ function getUserRepos(query) {
         })
         .then(responseJson => displayResults(responseJson))
         .catch(err => {
-            console.log(err.message);
+            $('.results-list').empty();
+            $('.results-list').append(`<li><h3>${err.message}</h3></li>`);
+            $('.results').removeClass('hidden');
         })
 }
 
