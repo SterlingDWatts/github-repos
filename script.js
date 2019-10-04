@@ -18,7 +18,6 @@ function getUserRepos(query) {
     // use fetch() to GET user repos from GitHub API
 
     const url = searchURL + '/users/' + query + '/repos';
-    console.log(url)
     const options = {
         headers: new Headers({
             "Accept": "application/vnd.github.v3+json"
@@ -46,7 +45,6 @@ function handleSubmit() {
     $('form').on('submit', function(e) {
         e.preventDefault();
         const searchTerm = $('input').val();
-        console.log(searchTerm);
         getUserRepos(searchTerm);
     })
 }
